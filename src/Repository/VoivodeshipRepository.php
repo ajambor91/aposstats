@@ -23,25 +23,22 @@ class VoivodeshipRepository extends ServiceEntityRepository
 
     public function insertData(array $voivodeships): bool {
         $em = $this->getEntityManager();
-        $voivodeshipsCount = count($voivodeships);
-        for ($i = 0; $i < $voivodeshipsCount; $i++) {
+        foreach ($voivodeships as $key => $voivodeship) {
             $voivodeshipEntity = new Voivodeship();
-            $voivodeshipEntity->setName($voivodeships[$i]['voivodeship']);
-            $citiesCount = count($voivodeships[$i]['cities']);
-            for ($j = 0; $j < $citiesCount; $j++) {
+            $voivodeshipEntity->setName($voivodeship['voivodeship']);
+            foreach ($voivodeship['cities'] as $cityKey => $city) {
                 $cityEntity = new City();
-                $cityEntity->setName($voivodeships[$i]['cities'][$j]);
+                $cityEntity->setName($city);
                 $voivodeshipEntity->addCity($cityEntity);
-                unset($voivodeships[$i]['cities'][$j]);
+                unset($voivodeships[$key]['cities'][$cityKey]);
             }
             try {
                 $em->clear();
                 $em->persist($voivodeshipEntity);
                 $em->flush();
-                unset($voivodeships[$i]);
+                unset($voivodeships[$key]);
             }
             catch (\Exception $exception){
-                dump($exception);die;
                 return false;
             }
         }
