@@ -4,9 +4,9 @@ class MergeTerytData
 {
     private $array;
 
-    public function mergeData(): array
+    public function mergeData(array $data): array
     {
-        $this->array = json_decode(file_get_contents('/var/www/html/aposstats/public/miasta.json'));
+        $this->array = $data;
         $this->serializeDataTMP();
         $this->removeDuplicateValues();
         return $this->array;
@@ -18,10 +18,10 @@ class MergeTerytData
         $array = $this->array;
         $this->array = null;
         foreach ($array as $voivodeship) {
-            $voivodeships[$voivodeship->id]['name'] = $voivodeship->name;
-            foreach ($voivodeship->counties as $county) {
-                foreach ($county->communities as $community) {
-                    $voivodeships[$voivodeship->id]['cities'][] = $community->name;
+            $voivodeships[$voivodeship['id']]['name'] = $voivodeship['name'];
+            foreach ($voivodeship['counties'] as $county) {
+                foreach ($county['communities'] as $community) {
+                    $voivodeships[$voivodeship['id']]['cities'][] = $community->name;
                 }
             }
         }

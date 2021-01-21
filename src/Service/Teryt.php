@@ -11,11 +11,13 @@ class Teryt{
     private $terytAPI;
     private $data;
 
-    public function getTerytData(): void {
+    public function getTerytData(): array
+    {
         $this->loginAndGetAPI();
         $this->getVoivodeships();
         $this->getCounties();
         $this->getCommunities();
+        return $this->data;
     }
     private function loginAndGetAPI(): void
     {
@@ -27,11 +29,13 @@ class Teryt{
         $this->terytAPI = NativeApi::create($config);
     }
 
-    private function getVoivodeships(): void {
+    private function getVoivodeships(): void
+    {
         $this->data = $this->terytAPI->PobierzListeWojewodztw();
     }
 
-    private function getCounties(): void {
+    private function getCounties(): void
+    {
         $voivodeships = $this->data;
         $this->data = [];
         /**
@@ -59,7 +63,5 @@ class Teryt{
                 $this->data[$voivodeship['id']]['counties'][$item->districtId]['communities'] = $this->terytAPI->PobierzListeGmin($voivodeship['id'], $item->districtId);
             }
         }
-        file_put_contents('/var/www/html/aposstats/public/miasta.json', json_encode($this->data));
     }
-
 }
