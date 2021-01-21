@@ -5,94 +5,125 @@ class Scrapper
 {
     const PAGE = 'https://www.licznikapostazji.pl/';
     const PATTERN = '/[<h3>]\d*.[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]*[(.|\ |a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ|,)][a-zA-Za-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]+[-]{0,1}[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]*[,|.][.]{0,1}[,]{0,1}[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ\/,.\- X]+[,]{1}\d{0,2}[.]{0,1}\d{0,2}[.]{0,1}\d+[<\/h3>]/';
+    const DATA_ARRAY_LENGTH = 5;
 
-    public function fillDatabase(): array
+    private $pageContent;
+    private $scrappedData;
+
+    public function getData(): array
     {
-        $pageContent = $this->getPage();
-        $array = $this->removeHTMLTags($pageContent);
-        $array = $this->replaceFirstDot($array);
-        $array = $this->removeInvalidChars($array);
-        $array = $this->hashData($array);
-        $array = $this->explodeArrItem($array);
-        $array = $this->addDate($array);
-        $array = $this->removePersonalData($array);
-        return $array;
+        $this->getPage();
+        $this->removeHTMLTags();
+        $this->replaceFirstDot();
+        $this->removeInvalidChars();
+        $this->hashData();
+        $this->explodeArrItem();
+        $this->validateScrappedData();
+        $this->addDate();
+        $this->removePersonalData();
+        return $this->scrappedData;
     }
 
-    private function getPage(): string
+    private function getPage(): void
     {
-        return file_get_contents(self::PAGE);
+        $this->pageContent = file_get_contents(self::PAGE);
     }
 
-    private function removeHTMLTags(string $page): array
+    private function removeHTMLTags(): void
     {
         $matches = [];
-        preg_match_all(self::PATTERN, str_replace(['\n', '\r', ' '], '', $page), $matches);
-        return $matches;
+        preg_match_all(self::PATTERN, str_replace(['\n', '\r', ' '], '', $this->pageContent), $matches);
+        $this->scrappedData = $matches;
     }
 
-    private function replaceFirstDot(array $data): array
+    private function replaceFirstDot(): void
     {
         $result = [];
-        foreach ($data as $datum) {
+        foreach ($this->scrappedData as $datum) {
             $result[] = preg_replace('/[.]/', ',', $datum, 1);
         }
-        return $result[0];
+        $this->scrappedData = $result[0];
     }
 
-    private function explodeArrItem(array $data): array
+    private function explodeArrItem(): void
     {
         $result = [];
-        foreach ($data as $datum) {
+        foreach ($this->scrappedData as $datum) {
             $tmpArr = [];
             $tmpArr = explode(',', $datum['raw']);
             $tmpArr[] = $datum['hash'];
             $result[] = $tmpArr;
         }
-        return $result;
+        $this->scrappedData = $result;
     }
 
-    private function removeInvalidChars(array $data): array
+    private function removeInvalidChars(): void
     {
         $result = [];
-        foreach ($data as $datum) {
+        foreach ($this->scrappedData as $datum) {
             $result[] = str_replace(['>', '<',], '', $datum);
         }
-
-        return $result;
+        $this->scrappedData = $result;
     }
 
-    private function hashData(array $data): array
+    private function hashData(): void
     {
         $result = [];
-        foreach ($data as $datum) {
+        foreach ($this->scrappedData as $datum) {
             $tmpArr = [
                 'raw' => $datum,
                 'hash' => md5($datum)
             ];
             $result[] = $tmpArr;
         }
-        return $result;
+        $this->scrappedData = $result;
     }
 
-    private function addDate(array $data): array
+    private function addDate(): void
     {
         $result = [];
-        foreach ($data as $datum) {
+        foreach ($this->scrappedData as $datum) {
             $datum[] = new \DateTime();
             $result[] = $datum;
         }
-        return $result;
+        $this->scrappedData = $result;
     }
 
-    private function removePersonalData(array $data): array
+    private function removePersonalData(): void
     {
         $result = [];
-        foreach ($data as $datum) {
+        $i = 0;
+        foreach ($this->scrappedData as $datum) {
             unset($datum[1]);
-            $result[] = array_values($datum);
+            $datum = array_values($datum);
+            $tmpArray = [
+                'ordinal_number' => $datum[0],
+                'city' => $datum[1],
+                'apostasy_year' => $datum[2],
+                'hash' => $datum[3],
+                'scrapped_at' => $datum[4]
+            ];
+            $result[] = $tmpArray;
         }
-        return $result;
+        $this->scrappedData = $result;
+    }
+
+    private function validateScrappedData(): void
+    {
+        $result = [];
+        foreach ($this->scrappedData as $datum) {
+            $tmpArray = $datum;
+            if(count($datum) > self::DATA_ARRAY_LENGTH &&
+                preg_match('/[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]/', $datum[2]) &&
+                preg_match('/[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]/', $datum[3]) ) {
+                $tmpArray = $datum;
+                $tmpArray[2] = $datum[2].$datum[3];
+                unset($tmpArray[3]);
+                $tmpArray = array_values($tmpArray);
+            }
+            $result[] = $tmpArray;
+        }
+        $this->scrappedData = $result;
     }
 
 }

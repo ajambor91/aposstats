@@ -1,7 +1,10 @@
 <?php
 namespace App\Controller;
 
+use App\Repository\VoivodeshipRepository;
+use App\Service\MergeTerytData;
 use App\Service\Scrapper;
+use App\Service\Teryt;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,8 +17,11 @@ class MainController extends AbstractController {
      * @param Scrapper $scrapper
      * @return JsonResponse
      */
-    public function showIndex(Scrapper $scrapper): JsonResponse {
-        $page = $scrapper->fillDatabase();
+
+    public function showIndex(MergeTerytData $scrapper, Teryt $teryt,VoivodeshipRepository  $voivodeshipRepository): JsonResponse {
+//        $teryt->getTerytData();
+        $page = $scrapper->mergeData();
+        $voivodeshipRepository->insertData($page);
         return new JsonResponse('ok', 200);
     }
 
