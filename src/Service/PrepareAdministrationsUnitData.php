@@ -14,7 +14,7 @@ class PrepareAdministrationsUnitData
          * @var City $datum
          */
         foreach ($data as $datum) {
-            $result = [
+            $result[] = [
                 'id' => $datum->getId(),
                 'name' => $datum->getName()
             ];
