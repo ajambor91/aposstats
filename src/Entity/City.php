@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +29,16 @@ class City
      * @ORM\JoinColumn(nullable=false)
      */
     private $voivodeship;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Apostasy::class, mappedBy="fittedCity")
+     */
+    private $apostasies;
+
+    public function __construct()
+    {
+        $this->apostasies = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,6 +65,36 @@ class City
     public function setVoivodeship(?Voivodeship $voivodeship): self
     {
         $this->voivodeship = $voivodeship;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Apostasy[]
+     */
+    public function getApostasies(): Collection
+    {
+        return $this->apostasies;
+    }
+
+    public function addApostasy(Apostasy $apostasy): self
+    {
+        if (!$this->apostasies->contains($apostasy)) {
+            $this->apostasies[] = $apostasy;
+            $apostasy->setFittedCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApostasy(Apostasy $apostasy): self
+    {
+        if ($this->apostasies->removeElement($apostasy)) {
+            // set the owning side to null (unless already changed)
+            if ($apostasy->getFittedCity() === $this) {
+                $apostasy->setFittedCity(null);
+            }
+        }
 
         return $this;
     }

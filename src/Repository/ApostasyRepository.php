@@ -29,7 +29,9 @@ class ApostasyRepository extends ServiceEntityRepository
                     ->setCity($datum['city'])
                     ->setApostasyYear((int)$datum['apostasy_year'])
                     ->setHash($datum['hash'])
-                    ->setScrappedAt($datum['scrapped_at']);
+                    ->setScrappedAt($datum['scrapped_at'])
+                    ->setFittedCity($datum['fittedCity'])
+                    ->setFittedVoivdeship($datum['fittedVoivodeship']);
                 try {
                     $em->persist($apostasyEntity);
                     $em->flush();

@@ -42,6 +42,16 @@ class Apostasy
      */
     private $scrappedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="apostasies")
+     */
+    private $fittedCity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Voivodeship::class, inversedBy="apostasies")
+     */
+    private $fittedVoivdeship;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +113,30 @@ class Apostasy
     public function setScrappedAt(\DateTimeInterface $scrappedAt): self
     {
         $this->scrappedAt = $scrappedAt;
+
+        return $this;
+    }
+
+    public function getFittedCity(): ?City
+    {
+        return $this->fittedCity;
+    }
+
+    public function setFittedCity(?City $fittedCity): self
+    {
+        $this->fittedCity = $fittedCity;
+
+        return $this;
+    }
+
+    public function getFittedVoivdeship(): ?Voivodeship
+    {
+        return $this->fittedVoivdeship;
+    }
+
+    public function setFittedVoivdeship(?Voivodeship $fittedVoivdeship): self
+    {
+        $this->fittedVoivdeship = $fittedVoivdeship;
 
         return $this;
     }

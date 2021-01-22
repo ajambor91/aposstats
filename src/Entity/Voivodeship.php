@@ -29,9 +29,15 @@ class Voivodeship
      */
     private $cities;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Apostasy::class, mappedBy="fittedVoivdeship")
+     */
+    private $apostasies;
+
     public function __construct()
     {
         $this->cities = new ArrayCollection();
+        $this->apostasies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,36 @@ class Voivodeship
             // set the owning side to null (unless already changed)
             if ($city->getVoivodeship() === $this) {
                 $city->setVoivodeship(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Apostasy[]
+     */
+    public function getApostasies(): Collection
+    {
+        return $this->apostasies;
+    }
+
+    public function addApostasy(Apostasy $apostasy): self
+    {
+        if (!$this->apostasies->contains($apostasy)) {
+            $this->apostasies[] = $apostasy;
+            $apostasy->setFittedVoivdeship($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApostasy(Apostasy $apostasy): self
+    {
+        if ($this->apostasies->removeElement($apostasy)) {
+            // set the owning side to null (unless already changed)
+            if ($apostasy->getFittedVoivdeship() === $this) {
+                $apostasy->setFittedVoivdeship(null);
             }
         }
 
