@@ -20,7 +20,7 @@ class GetTerytDataCommand extends Command
     private $mergeTeryt;
     private $voivodeshipRepository;
 
-    public function __construct(Teryt $teryt, MergeTerytData $mergeTerytData, VoivodeshipRepository  $voivodeshipRepository, string $name = null)
+    public function __construct(Teryt $teryt, MergeTerytData $mergeTerytData, VoivodeshipRepository $voivodeshipRepository, string $name = null)
     {
         parent::__construct($name);
         $this->teryt = $teryt;
@@ -39,7 +39,7 @@ class GetTerytDataCommand extends Command
         $io->success('Downloading Teryt data');
         $data = $this->teryt->getTerytData();
         $data = $this->mergeTeryt->mergeData($data);
-        if($this->voivodeshipRepository->insertData($data)) {
+        if ($this->voivodeshipRepository->insertData($data)) {
             return Command::SUCCESS;
         }
         return Command::FAILURE;

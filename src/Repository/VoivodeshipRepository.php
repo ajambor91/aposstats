@@ -21,7 +21,8 @@ class VoivodeshipRepository extends ServiceEntityRepository
         parent::__construct($registry, Voivodeship::class);
     }
 
-    public function insertData(array $voivodeships): bool {
+    public function insertData(array $voivodeships): bool
+    {
         $em = $this->getEntityManager();
         foreach ($voivodeships as $key => $voivodeship) {
             $voivodeshipEntity = new Voivodeship();
@@ -37,8 +38,7 @@ class VoivodeshipRepository extends ServiceEntityRepository
                 $em->persist($voivodeshipEntity);
                 $em->flush();
                 unset($voivodeships[$key]);
-            }
-            catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return false;
             }
         }

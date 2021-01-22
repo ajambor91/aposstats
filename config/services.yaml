@@ -37,3 +37,6 @@ services:
     App\Command\GetTerytDataCommand:
         tags:
             - { name: 'console.command', command: 'app:get-teryt-data' }
+    App\Command\SetAppConfigCommand:
+        tags:
+            - { name: 'console.command', command: 'app:set-app-config' }

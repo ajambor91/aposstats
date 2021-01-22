@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Service;
+
 use mrcnpdlk\Teryt\NativeApi;
 use mrcnpdlk\Teryt\Config;
 use mrcnpdlk\Teryt\ResponseModel\Territory\JednostkaTerytorialna;
 
-class Teryt{
+class Teryt
+{
     /**
      * @var NativeApi $terytAPI
      */
@@ -19,6 +22,7 @@ class Teryt{
         $this->getCommunities();
         return $this->data;
     }
+
     private function loginAndGetAPI(): void
     {
         $config = new Config([
@@ -41,7 +45,7 @@ class Teryt{
         /**
          * @var JednostkaTerytorialna $voivodeship
          */
-        foreach ($voivodeships as $voivodeship){
+        foreach ($voivodeships as $voivodeship) {
             $this->data[$voivodeship->provinceId]['id'] = $voivodeship->provinceId;
             $this->data[$voivodeship->provinceId]['name'] = $voivodeship->name;
             $this->data[$voivodeship->provinceId]['status'] = $voivodeship->typeName;
@@ -52,7 +56,7 @@ class Teryt{
     private function getCommunities(): void
     {
         $voivodeships = $this->data;
-        foreach ($voivodeships as $voivodeship){
+        foreach ($voivodeships as $voivodeship) {
             /**
              * @var JednostkaTerytorialna $item
              */

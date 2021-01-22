@@ -44,7 +44,7 @@ class GetApostatesDataCommand extends Command
 
     public function __construct(ContainerInterface $container,
                                 Scrapper $scrapper,
-                                FitCities  $fitCities,
+                                FitCities $fitCities,
                                 string $name = null)
     {
         parent::__construct($name);
@@ -90,7 +90,7 @@ class GetApostatesDataCommand extends Command
 
     private function getFitCity(string $city): City
     {
-        return $this->cityRepostory->findOneBy(['name'=>$city]);
+        return $this->cityRepostory->findOneBy(['name' => $city]);
     }
 
     private function getFitVoivodeship(City $city): Voivodeship
@@ -98,7 +98,8 @@ class GetApostatesDataCommand extends Command
         return $this->voivodeshipsRepository->find($city->getVoivodeship()->getId());
     }
 
-    private function fitCity(): void {
+    private function fitCity(): void
+    {
         $this->fitCity->setCities($this->terytCities);
         foreach ($this->data as $key => $datum) {
             $this->fitCity->setScrappedCity($datum['city']);

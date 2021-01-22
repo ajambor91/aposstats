@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Apostasy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,6 +15,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ApostasyRepository extends ServiceEntityRepository
 {
+
+    private $firstCondition = true;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Apostasy::class);
@@ -37,14 +41,78 @@ class ApostasyRepository extends ServiceEntityRepository
                     $em->flush();
                 } catch (\Exception $e) {
                     $em = $this->getEntityManager();
-                        $em = $em->create(
-                            $em->getConnection(),
-                            $em->getConfiguration()
-                        );
+                    $em = $em->create(
+                        $em->getConnection(),
+                        $em->getConfiguration()
+                    );
                 }
-            }while(!$em->isOpen());
+            } while (!$em->isOpen());
         }
         return true;
+    }
+
+    public function getApostasiesData(array $data): array
+    {
+        $qb = $this->createQueryBuilder('q');
+        if (isset($data['from']) || isset($data['to'])) {
+            $periodArr = $this->getPeriod(
+                isset($data['from']) ?: null,
+                isset($data['to']) ?: null
+            );
+            $qb = $this->setPerid($qb, $periodArr);
+        }
+        if (isset($data['cityId'])) {
+            $qb = $this->setCity($qb, $data);
+        }
+
+        if (isset($data['voivodeshipId'])) {
+            $qb = $this->setCity($qb, $data);
+        }
+        return $qb->getQuery()->getResult();
+    }
+
+    private function getPeriod(string $from, string $to): array
+    {
+        return [
+            'from' => $from != null ? new \DateTime($from) : new \DateTime('00.00.0000'),
+            'to' => $to != null ? new \DateTime($to) : new \DateTime()
+        ];
+    }
+
+    private function setPerid(QueryBuilder $builder, array $period): QueryBuilder
+    {
+        $builder->where('q.scrappedAt > :from q.scrappedAt < :to')
+            ->setParameters([
+                'from' => $period['from'],
+                'to' => $period['to']
+            ]);
+        $this->firstCondition = false;
+        return $builder;
+    }
+
+    private function setCity(QueryBuilder $builder, $data): QueryBuilder
+    {
+        $where = 'q.fittedCity = :cityId';
+        if ($this->firstCondition) {
+            $builder->where($where);
+        } else {
+            $builder->andWhere($where);
+        }
+
+        $builder->setParameter('cityId', $data['cityId']);
+        return $builder;
+    }
+
+    private function setVoivodeship(QueryBuilder $builder, $data): QueryBuilder
+    {
+        $where = 'q.fittedVoivodeship = :voivodeshipId';
+        if ($this->firstCondition) {
+            $builder->where($where);
+        } else {
+            $builder->andWhere($where);
+        }
+        $builder->setParameter('voivodeshipId', $data['voivodeshipId']);
+        return $builder;
     }
 
     // /**

@@ -113,11 +113,11 @@ class Scrapper
         $result = [];
         foreach ($this->scrappedData as $datum) {
             $tmpArray = $datum;
-            if(count($datum) > self::DATA_ARRAY_LENGTH &&
+            if (count($datum) > self::DATA_ARRAY_LENGTH &&
                 preg_match('/[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]/', $datum[2]) &&
-                preg_match('/[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]/', $datum[3]) ) {
+                preg_match('/[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]/', $datum[3])) {
                 $tmpArray = $datum;
-                $tmpArray[2] = $datum[2].$datum[3];
+                $tmpArray[2] = $datum[2] . $datum[3];
                 unset($tmpArray[3]);
                 $tmpArray = array_values($tmpArray);
             }

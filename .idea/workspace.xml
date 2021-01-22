@@ -5,14 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e98e064-c17c-4ea8-bbb2-501c96a5d337" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/FitCities.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/PrepareApostasiesResponse.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Command/GetApostatesDataCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/GetApostatesDataCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Command/GetTerytDataCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/GetTerytDataCommand.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Apostasy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Apostasy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/City.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/City.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Voivodeship.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Voivodeship.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/ApostasyRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ApostasyRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/VoivodeshipRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/VoivodeshipRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/MergeTerytData.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/MergeTerytData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Scrapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Scrapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Teryt.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Teryt.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +166,11 @@
       <workItem from="1611320087957" duration="1781000" />
       <workItem from="1611322019854" duration="2802000" />
       <workItem from="1611325157221" duration="1785000" />
-      <workItem from="1611326977800" duration="1407000" />
+      <workItem from="1611326977800" duration="1784000" />
+      <workItem from="1611330518455" duration="990000" />
+      <workItem from="1611337469091" duration="1783000" />
+      <workItem from="1611339291979" duration="1779000" />
+      <workItem from="1611341107541" duration="654000" />
     </task>
     <servers />
   </component>

@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Apostasy
 {
+    const BY_YEAR = 0;
+    const BY_MONTH = 1;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
