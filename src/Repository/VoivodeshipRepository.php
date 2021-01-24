@@ -31,12 +31,14 @@ class VoivodeshipRepository extends ServiceEntityRepository
                 $cityEntity = new City();
                 $cityEntity->setName($city);
                 $voivodeshipEntity->addCity($cityEntity);
+                $voivodeships[$key]['cities'][$cityKey] = null;
                 unset($voivodeships[$key]['cities'][$cityKey]);
             }
             try {
                 $em->clear();
                 $em->persist($voivodeshipEntity);
                 $em->flush();
+                $voivodeships[$key] = null;
                 unset($voivodeships[$key]);
             } catch (\Exception $exception) {
                 return false;
