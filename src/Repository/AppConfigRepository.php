@@ -34,6 +34,11 @@ class AppConfigRepository extends ServiceEntityRepository
         }
     }
 
+    public function getConfigValue(string $key)
+    {
+        return $this->findOneBy(['configKey'=>$key]);
+    }
+
     // /**
     //  * @return AppConfig[] Returns an array of AppConfig objects
     //  */

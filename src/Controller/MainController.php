@@ -80,4 +80,41 @@ class MainController extends AbstractController
         return new JsonResponse($data, 200);
     }
 
+    /**
+     * @Route("/get-statistics", methods={"GET"}, name="get_statistics")
+     * @param ApostasyRepository $apostasyRepository
+     * @param Request $request
+     * @param PrepareApostasiesResponse $apostasiesResponse
+     * @param AppConfigRepository $appConfigRepository
+     * @return JsonResponse
+     */
+    public function getStatistics(ApostasyRepository $apostasyRepository,
+                                  Request $request,
+                                  PrepareApostasiesResponse $apostasiesResponse,
+                                  AppConfigRepository $appConfigRepository): JsonResponse
+    {
+        $data = $request->query->all();
+        $period = isset($data['periodBy']) ? $data['periodBy'] : Apostasy::BY_YEAR;
+        $startDate = $appConfigRepository->getConfigValue(AppConfig::CONFIG_KEYS[AppConfig::START_DATE]);
+        if (isset($data['from']) && $period != Apostasy::BY_YEAR) {
+            $data['from'] = $this->checkIsStartDateToSmall($data['from'], $startDate);
+        }
+        $data = $apostasyRepository->getApostatesStatistics($data, $period);
+        $data = $apostasiesResponse->prepareStats($data);
+        return new JsonResponse($data, 200);
+    }
+
+    /**
+     * @param string $from
+     * @param AppConfig $startDate
+     * @return string
+     * @throws \Exception
+     */
+    private function checkIsStartDateToSmall(string $from, AppConfig $startDate): string
+    {
+        $fromDt = new \DateTime($from);
+        $startDate = new \DateTime($startDate->getConfigValue());
+        return $fromDt < $startDate ? $startDate->format('Y-m-d') : $from;
+    }
+
 }

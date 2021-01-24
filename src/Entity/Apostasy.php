@@ -12,6 +12,7 @@ class Apostasy
 {
     const BY_YEAR = 0;
     const BY_MONTH = 1;
+    const BY_DAY = 2;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

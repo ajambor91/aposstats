@@ -4,7 +4,7 @@ namespace App\Service;
 class Scrapper
 {
     const PAGE = 'https://www.licznikapostazji.pl/';
-    const PATTERN = '/[<h3>]\d*.[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]*[(.|\ |a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ|,)][a-zA-Za-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]+[-]{0,1}[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]*[,|.][.]{0,1}[,]{0,1}[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ\/,.\- X]+[,]{1}\d{0,2}[.]{0,1}\d{0,2}[.]{0,1}\d+[<\/h3>]/';
+    const PATTERN = '/[<h3>]\d*.[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]*[(.|\ |a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ|,)][a-zA-Za-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]+[-]{0,1}[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ]*[,|.][.]{0,1}[,]{0,1}[a-zA-ZźżńśćąęłóŹŻŃŚĆĄĘŁÓ\/,.\- X]+[,]{1}\d{0,2}[.|,|\/]{0,1}\d{0,2}[.|,|\/]{0,1}\d{4}[<\/h3>]/';
     const DATA_ARRAY_LENGTH = 5;
 
     private $pageContent;
@@ -59,9 +59,10 @@ class Scrapper
 
     private function removeInvalidChars(): void
     {
+        $pattern = '/\d{0,2}[\/|.]/';
         $result = [];
         foreach ($this->scrappedData as $datum) {
-            $result[] = str_replace(['>', '<',], '', $datum);
+            $result[] = preg_replace($pattern,'',str_replace(['>', '<',], '', $datum));
         }
         $this->scrappedData = $result;
     }

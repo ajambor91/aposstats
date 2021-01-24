@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e98e064-c17c-4ea8-bbb2-501c96a5d337" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controller/ConfigController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Apostasy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Apostasy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ApostasyRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ApostasyRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/AppConfigRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/AppConfigRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/PrepareAdministrationsUnitData.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PrepareAdministrationsUnitData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/PrepareApostasiesResponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PrepareApostasiesResponse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Scrapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Scrapper.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +168,25 @@
       <workItem from="1611337469091" duration="1783000" />
       <workItem from="1611339291979" duration="1779000" />
       <workItem from="1611341107541" duration="1608000" />
-      <workItem from="1611342924878" duration="752000" />
+      <workItem from="1611342924878" duration="1513000" />
+      <workItem from="1611347771349" duration="1785000" />
+      <workItem from="1611349588308" duration="1784000" />
+      <workItem from="1611351402866" duration="1784000" />
+      <workItem from="1611353224230" duration="1785000" />
+      <workItem from="1611355042424" duration="246000" />
+      <workItem from="1611393972841" duration="1510000" />
+      <workItem from="1611396222605" duration="1157000" />
+      <workItem from="1611399798002" duration="600000" />
+      <workItem from="1611401981120" duration="1780000" />
+      <workItem from="1611403798608" duration="1779000" />
+      <workItem from="1611406394090" duration="1050000" />
+      <workItem from="1611411756730" duration="1676000" />
+      <workItem from="1611413969744" duration="899000" />
+      <workItem from="1611417944341" duration="1784000" />
+      <workItem from="1611419761127" duration="1818000" />
+      <workItem from="1611481430855" duration="1784000" />
+      <workItem from="1611483477463" duration="1786000" />
+      <workItem from="1611489116631" duration="1266000" />
     </task>
     <servers />
   </component>
@@ -188,17 +214,17 @@
       <screen x="0" y="0" width="1366" height="742" />
     </state>
     <state x="0" y="103" width="861" height="457" key="dock-window-1/0.0.1366.742@0.0.1366.742" timestamp="1611223363361" />
-    <state x="374" y="111" width="618" height="580" key="find.popup" timestamp="1611235240496">
+    <state x="374" y="111" width="618" height="580" key="find.popup" timestamp="1611482746085">
       <screen x="0" y="0" width="1366" height="742" />
     </state>
-    <state x="374" y="111" width="618" height="580" key="find.popup/0.0.1366.742@0.0.1366.742" timestamp="1611235240496" />
-    <state x="345" y="164" key="run.anything.popup" timestamp="1611158351551">
+    <state x="374" y="111" width="618" height="580" key="find.popup/0.0.1366.742@0.0.1366.742" timestamp="1611482746085" />
+    <state x="345" y="164" key="run.anything.popup" timestamp="1611349752392">
       <screen x="0" y="0" width="1366" height="742" />
     </state>
-    <state x="345" y="164" key="run.anything.popup/0.0.1366.742@0.0.1366.742" timestamp="1611158351551" />
-    <state x="346" y="63" width="672" height="678" key="search.everywhere.popup" timestamp="1611228864868">
+    <state x="345" y="164" key="run.anything.popup/0.0.1366.742@0.0.1366.742" timestamp="1611349752392" />
+    <state x="346" y="63" width="672" height="678" key="search.everywhere.popup" timestamp="1611402918522">
       <screen x="0" y="0" width="1366" height="742" />
     </state>
-    <state x="346" y="63" width="672" height="678" key="search.everywhere.popup/0.0.1366.742@0.0.1366.742" timestamp="1611228864868" />
+    <state x="346" y="63" width="672" height="678" key="search.everywhere.popup/0.0.1366.742@0.0.1366.742" timestamp="1611402918522" />
   </component>
 </project>

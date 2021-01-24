@@ -25,4 +25,11 @@ class PrepareApostasiesResponse
         }
         return $result;
     }
+
+    public function prepareStats($data): array {
+        return [[
+            'name' => 'Apostazje',
+            'series' => $data
+        ]];
+    }
 }

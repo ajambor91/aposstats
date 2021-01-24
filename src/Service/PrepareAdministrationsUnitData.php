@@ -14,6 +14,10 @@ class PrepareAdministrationsUnitData
          * @var City $datum
          */
         foreach ($data as $datum) {
+            $existingApostasy = $datum->getApostasies()->toArray();
+            if(empty($existingApostasy)) {
+                continue;
+            }
             $result[] = [
                 'id' => $datum->getId(),
                 'name' => $datum->getName()
