@@ -124,6 +124,21 @@ class ApostasyRepository extends ServiceEntityRepository
         return $result;
     }
 
+    public function getFirstApostasyByRegion(array $data): array {
+        $qb = $this->createQueryBuilder('q');
+        $qb->select('MIN(q.apostasyYear)');
+        if (isset($data['cityId']) && $data['cityId']) {
+                $qb->where('q.fittedCity = :id')
+                    ->setParameter('id',$data['cityId']);
+                $data['voivodeshipId'] = null;
+                unset($data['voivodeshipId']);
+        } elseif (isset($data['voivodeshipId']) && $data['voivodeshipId']) {
+            $qb->where('q.fittedVoivdeship = :id')
+                ->setParameter('id',$data['voivodeshipId']);
+        }
+        return $qb->getQuery()->getSingleResult();
+    }
+
     private function getPeriodInterval($from, $to, int $periodType): \DatePeriod
     {
         $intervals = [

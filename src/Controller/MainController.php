@@ -105,6 +105,22 @@ class MainController extends AbstractController
     }
 
     /**
+     * @Route("/get-first-by-region", methods={"GET"}, name="get_first_by_region")
+     * @param Request $request
+     * @param ApostasyRepository $apostasyRepository
+     * @return JsonResponse
+     */
+    public function getFirstApostasyByRegion(Request $request, ApostasyRepository $apostasyRepository): JsonResponse
+    {
+        $data = $request->query->all();
+        $data = $apostasyRepository->getFirstApostasyByRegion($data);
+        $data = [
+            'date' => $data[1]
+        ];
+        return new JsonResponse($data,200);
+    }
+
+    /**
      * @param string $from
      * @param AppConfig $startDate
      * @return string
