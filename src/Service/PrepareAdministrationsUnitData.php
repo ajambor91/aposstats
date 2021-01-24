@@ -23,7 +23,7 @@ class PrepareAdministrationsUnitData
                 'name' => $datum->getName()
             ];
         }
-        return $result;
+        return $this->alphaSort($result);
     }
 
     public function prepareVoivodeships(array $data): array
@@ -35,9 +35,17 @@ class PrepareAdministrationsUnitData
         foreach ($data as $datum) {
             $result[] = [
                 'id' => $datum->getId(),
-                'name' => ucfirst(mb_strtolower($datum->getName()))
+                'name' => mb_convert_case(ucfirst(mb_strtolower($datum->getName())), MB_CASE_TITLE, 'UTF-8')
             ];
         }
-        return $result;
+        return $this->alphaSort($result);
+    }
+
+    private function alphaSort(array $data): array
+    {
+        usort($data, function ($item1, $item2) {
+            return $item1['name'] <=> $item2['name'];
+        });
+        return $data;
     }
 }
